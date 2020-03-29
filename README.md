@@ -1,5 +1,6 @@
 # Course Finder
 
+A simple app built using react and redux
 
 ## Get Started
 
