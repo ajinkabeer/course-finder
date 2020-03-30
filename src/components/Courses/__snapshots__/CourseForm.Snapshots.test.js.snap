@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`set submit button label 'Save' when saving is false 1`] = `
+exports[`sets submit button label 'Save' when saving is false 1`] = `
 <form
   onSubmit={[MockFunction]}
 >
@@ -98,7 +98,7 @@ exports[`set submit button label 'Save' when saving is false 1`] = `
 </form>
 `;
 
-exports[`set submit button label 'Saving ..' when saving is true 1`] = `
+exports[`sets submit button label 'Saving...' when saving is true 1`] = `
 <form
   onSubmit={[MockFunction]}
 >

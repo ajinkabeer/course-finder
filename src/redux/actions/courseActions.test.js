@@ -36,17 +36,17 @@ describe("Async Actions", () => {
 
 describe("createCourseSuccess", () => {
   it("should create a CREATE_COURSE_SUCCESS action", () => {
-    // arrange
+    //arrange
     const course = courses[0];
     const expectedAction = {
       type: types.CREATE_COURSE_SUCCESS,
       course
     };
 
-    // act
+    //act
     const action = courseActions.createCourseSuccess(course);
 
-    // assert
+    //assert
     expect(action).toEqual(expectedAction);
   });
 });

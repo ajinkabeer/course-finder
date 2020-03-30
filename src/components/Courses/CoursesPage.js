@@ -15,33 +15,27 @@ class CoursesPage extends React.Component {
   };
 
   componentDidMount() {
-    const { courses, authors } = this.props;
+    const { courses, authors, actions } = this.props;
+
     if (courses.length === 0) {
-      this.loadCourses();
+      actions.loadCourses().catch(error => {
+        alert("Loading courses failed" + error);
+      });
     }
+
     if (authors.length === 0) {
-      this.loadAuthors();
+      actions.loadAuthors().catch(error => {
+        alert("Loading authors failed" + error);
+      });
     }
   }
-
-  loadCourses = () => {
-    this.props.actions.loadCourses().catch(error => {
-      alert("Loading courses failed" + error);
-    });
-  };
-
-  loadAuthors = () => {
-    this.props.actions.loadAuthors().catch(error => {
-      alert("Loading authors failed" + error);
-    });
-  };
 
   handleDeleteCourse = async course => {
     toast.success("Course deleted");
     try {
       await this.props.actions.deleteCourse(course);
     } catch (error) {
-      toast.error("Delete Failed" + error.message, { autoClose: false });
+      toast.error("Delete failed. " + error.message, { autoClose: false });
     }
   };
 
@@ -49,7 +43,7 @@ class CoursesPage extends React.Component {
     return (
       <>
         {this.state.redirectToAddCoursePage && <Redirect to="/course" />}
-        <h1>Courses</h1>
+        <h2>Courses</h2>
         {this.props.loading ? (
           <Spinner />
         ) : (
@@ -61,6 +55,7 @@ class CoursesPage extends React.Component {
             >
               Add Course
             </button>
+
             <CourseList
               onDeleteClick={this.handleDeleteCourse}
               courses={this.props.courses}
@@ -73,9 +68,9 @@ class CoursesPage extends React.Component {
 }
 
 CoursesPage.propTypes = {
-  actions: PropTypes.object.isRequired,
-  courses: PropTypes.array.isRequired,
   authors: PropTypes.array.isRequired,
+  courses: PropTypes.array.isRequired,
+  actions: PropTypes.object.isRequired,
   loading: PropTypes.bool.isRequired
 };
 
@@ -105,4 +100,7 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CoursesPage);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CoursesPage);

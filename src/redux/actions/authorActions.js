@@ -2,7 +2,7 @@ import * as types from "./actionTypes";
 import * as authorApi from "../../api/authorApi";
 import { beginApiCall, apiCallError } from "./apiStatusActions";
 
-export function loadAuthorSuccess(authors) {
+export function loadAuthorsSuccess(authors) {
   return { type: types.LOAD_AUTHORS_SUCCESS, authors };
 }
 
@@ -12,7 +12,7 @@ export function loadAuthors() {
     return authorApi
       .getAuthors()
       .then(authors => {
-        dispatch(loadAuthorSuccess(authors));
+        dispatch(loadAuthorsSuccess(authors));
       })
       .catch(error => {
         dispatch(apiCallError(error));

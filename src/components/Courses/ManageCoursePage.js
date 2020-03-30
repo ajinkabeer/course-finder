@@ -5,14 +5,14 @@ import { loadAuthors } from "../../redux/actions/authorActions";
 import PropTypes from "prop-types";
 import CourseForm from "./CourseForm";
 import { newCourse } from "../../../tools/mockData";
-import Spinner from "../Common/Spinner";
+import Spinner from "../common/Spinner";
 import { toast } from "react-toastify";
 
 export function ManageCoursePage({
   courses,
   authors,
-  loadCourses,
   loadAuthors,
+  loadCourses,
   saveCourse,
   history,
   ...props
@@ -29,6 +29,7 @@ export function ManageCoursePage({
     } else {
       setCourse({ ...props.course });
     }
+
     if (authors.length === 0) {
       loadAuthors().catch(error => {
         alert("Loading authors failed" + error);
@@ -48,11 +49,12 @@ export function ManageCoursePage({
     const { title, authorId, category } = course;
     const errors = {};
 
-    if (!title) errors.title = "Title is required";
+    if (!title) errors.title = "Title is required.";
     if (!authorId) errors.author = "Author is required";
     if (!category) errors.category = "Category is required";
 
     setErrors(errors);
+    // Form is valid if the errors object still has no properties
     return Object.keys(errors).length === 0;
   }
 
@@ -87,11 +89,10 @@ export function ManageCoursePage({
 
 ManageCoursePage.propTypes = {
   course: PropTypes.object.isRequired,
-  actions: PropTypes.object.isRequired,
+  authors: PropTypes.array.isRequired,
+  courses: PropTypes.array.isRequired,
   loadCourses: PropTypes.func.isRequired,
   loadAuthors: PropTypes.func.isRequired,
-  courses: PropTypes.array.isRequired,
-  authors: PropTypes.array.isRequired,
   saveCourse: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired
 };
@@ -100,8 +101,8 @@ export function getCourseBySlug(courses, slug) {
   return courses.find(course => course.slug === slug) || null;
 }
 
-function mapStateToProps(state, OwnProps) {
-  const slug = OwnProps.match.params.slug;
+function mapStateToProps(state, ownProps) {
+  const slug = ownProps.match.params.slug;
   const course =
     slug && state.courses.length > 0
       ? getCourseBySlug(state.courses, slug)
@@ -119,4 +120,7 @@ const mapDispatchToProps = {
   saveCourse
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ManageCoursePage);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ManageCoursePage);

@@ -9,7 +9,7 @@ export default function apiCallStatusReducer(
   state = initialState.apiCallsInProgress,
   action
 ) {
-  if (action.type === types.BEGIN_API_CALL) {
+  if (action.type == types.BEGIN_API_CALL) {
     return state + 1;
   } else if (
     action.type === types.API_CALL_ERROR ||
@@ -17,5 +17,6 @@ export default function apiCallStatusReducer(
   ) {
     return state - 1;
   }
+
   return state;
 }

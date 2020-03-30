@@ -7,21 +7,25 @@ const webpackBundleAnalyzer = require("webpack-bundle-analyzer");
 process.env.NODE_ENV = "production";
 
 module.exports = {
-  mode: "production", //webpack knows to run in dev mode. Sets node env in dev and disables production only features
-  target: "web", // For browser, can also be set to node for apps running in node
-  devtool: "source-map", //Source map let us see original code in the browser
-  entry: "./src/index", //entry point of the app
+  mode: "production",
+  target: "web",
+  devtool: "source-map",
+  entry: "./src/index",
   output: {
     path: path.resolve(__dirname, "build"),
-    publicPath: "/", //public url of the output directory when its referenced in the browser
+    publicPath: "/",
     filename: "bundle.js"
   },
   plugins: [
+    // Display bundle stats
     new webpackBundleAnalyzer.BundleAnalyzerPlugin({ analyzerMode: "static" }),
+
     new MiniCssExtractPlugin({
       filename: "[name].[contenthash].css"
     }),
+
     new webpack.DefinePlugin({
+      // This global makes sure React is built in prod mode.
       "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
       "process.env.API_URL": JSON.stringify("http://localhost:3001")
     }),
@@ -29,6 +33,7 @@ module.exports = {
       template: "src/index.html",
       favicon: "src/favicon.png",
       minify: {
+        // see https://github.com/kangax/html-minifier#options-quick-reference
         removeComments: true,
         collapseWhitespace: true,
         removeRedundantAttributes: true,
@@ -42,13 +47,12 @@ module.exports = {
       }
     })
   ],
-  //tell webpack what files to handle
   module: {
     rules: [
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        use: ["babel-loader", "eslint-loader"]
+        use: ["babel-loader"]
       },
       {
         test: /(\.css)$/,
