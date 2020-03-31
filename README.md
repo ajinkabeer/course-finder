@@ -1,5 +1,7 @@
 # Course Finder
 
+A simple course finder app built using React and Redux
+
 ## Get Started
 
 1. **Install [Node 8](https://nodejs.org)** or newer. Need to run multiple versions of Node? Use [nvm](https://github.com/creationix/nvm) or [nvm-windows](https://github.com/coreybutler/nvm-windows)(https://github.com/coryhouse/pluralsight-redux-starter/archive/master.zip)
